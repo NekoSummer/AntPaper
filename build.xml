@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="AntPaper" default="dist" basedir="." >
+    <description>用于构建老版本Paper插件的模板(用于1.8 ～ 1.16)</description>
+    <property name="plugin.name" value="AntPaper" />
+    <property name="plugin.version" value="1.0-SNAPSHOT" />
+
+    <property name="lib.paper" location="lib/libpaper.jar" />
+
+    <property name="src.dir" location="src" />
+    <property name="dist.dir" location="dist" />
+    <property name="bin.dir" location="bin" />
+
+    <target name="init">
+        <mkdir dir="${bin.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${bin.dir}" includeantruntime="false">
+            <classpath>
+                <pathelement location="${lib.paper}" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="dist" depends="compile">
+        <mkdir dir="${dist.dir}" />
+        <jar jarfile="${dist.dir}/${plugin.name}-${plugin.version}.jar">
+            <fileset dir="${bin.dir}" />
+            <fileset file="plugin.yml" />
+        </jar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${bin.dir}" />
+        <delete dir="${dist.dir}" />
+    </target>
+</project>
