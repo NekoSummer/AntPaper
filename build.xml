@@ -33,7 +33,39 @@
     </target>
 
     <target name="clean">
+        <!-- Build cache -->
         <delete dir="${bin.dir}" />
         <delete dir="${dist.dir}" />
+
+        <!-- Server dir -->
+        <delete dir="logs" />
+        <delete dir="plugins" />
+        <delete dir="world" />
+        <delete dir="world_nether" />
+        <delete dir="world_the_end" />
+
+        <!-- Files -->
+        <delete file="banned-ips.json" />
+        <delete file="banned-players.json" />
+        <delete file="bukkit.yml" />
+        <delete file="commands.yml" />
+        <delete file="eula.txt" />
+        <delete file="help.yml" />
+        <delete file="ops.json" />
+        <delete file="paper.yml" />
+        <delete file="permissions.yml" />
+        <delete file="server.properties" />
+        <delete file="spigot.yml" />
+        <delete file="usercache.json" />
+        <delete file="whitelist.json" />
+    </target>
+
+    <target name="test" depends="dist">
+        <mkdir dir="plugins" />
+        <copy file="${dist.dir}/${plugin.name}-${plugin.version}.jar"
+              todir="plugins" overwrite="true"/>
+        <java jar="${lib.paper}" fork="true" failonerror="true">
+            <arg value="nogui" />
+        </java>
     </target>
 </project>
